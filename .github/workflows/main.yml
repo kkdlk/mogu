@@ -1,0 +1,53 @@
+# workflow name
+name: AutoCheck
+
+# main branch on push, auto run
+on:
+  release:
+    types: [published]
+  push:
+    tags:
+      - "v*"
+    branches:
+      - main
+  schedule:
+    - cron: "0 0,10 * * *"
+  # watch:
+  #   types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      # check it to your workflow can access it
+      # from: https://github.com/actions/checkout
+      - name: 1. 检查main分支
+        uses: actions/checkout@main
+
+      # from: https://github.com/actions/setup-node
+      - name: 2. 设置Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 3. 缓存
+        uses: actions/cache@v1
+        id: cache-dependencies
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/yarn.lock')}}
+
+      - name: 4. 安装插件
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: |
+          export TZ='Asia/Shanghai'
+          yarn install
+
+      - name: 5. 运行签到
+        run: |
+          cd ./src
+          ls
+          node main.js ${{secrets.PHONE}} ${{secrets.PASSWORD}} ${{secrets.SCKEY}} ${{secrets.token}}
