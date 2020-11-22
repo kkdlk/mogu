@@ -52,6 +52,15 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
       reMindMsg.desp = "恭喜你蘑菇丁签到成功了！";
     }
     let msg = await remind(axios, config, reMindMsg);
+    // 日报结果
+    const result1 = await daily(axios, planId);
+    if (result1) {
+      reMindMsg.text = `🎉 ${data.getFullYear()}年${
+        data.getMonth() + 1
+      }月${data.getDate()}日 蘑菇丁日报打卡成功啦！ 🎉`;
+      reMindMsg.desp = "恭喜你蘑菇丁日报打卡成功了！";
+    }
+    let msg = await remind(axios, config, reMindMsg);
     console.log(msg);
     return true;
   } else {
