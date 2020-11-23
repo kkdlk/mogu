@@ -6,6 +6,8 @@
  * @Description: 开始执行日报
  */
 
+let huli = require("../context/huli.json")
+let dianzixinxi = require("../context/dianzixinxi.json")
 
 // 查看当前月份的总天数 （最大天数）
 function mGetDate(){
@@ -38,8 +40,7 @@ function contentTxts (config,axios){
   axios.defaults.baseURL = "";
   let college = config.LEABLETI;
   if (college=="护理"){
-    axios.get("../context/huli.json").then(response =>{
-      var result = response.data.data;
+      var result  = huli.data
       var txt = "";
       let reslength = result.length
       for (let index = 0; index < 2; index++) {
@@ -47,10 +48,8 @@ function contentTxts (config,axios){
         txt += result[resultRandomLength]
       }
       return txt;
-    })
   }else if(college=="电子信息"){
-    axios.get("../context/dianzixinxi.json").then(response =>{
-      var result = response.data.data;
+      var result  = dianzixinxi.data
       var txt = "";
       let reslength = result.length
       for (let index = 0; index < 2; index++) {
@@ -58,7 +57,6 @@ function contentTxts (config,axios){
         txt += result[resultRandomLength]
       }
       return txt;
-    })
   }
   return "";
 }
@@ -78,7 +76,7 @@ async function daily (axios, planId,config) {
       title: title1 //日报标题  上班或休假 每周有2天休假的时间
     }
     console.log("planId:"+planId)
-    
+
     axios.defaults.baseURL = "https://api.moguding.net:9000";
    // 发送日报签到请求
     let { data: res } = await axios.request({
