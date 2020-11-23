@@ -34,7 +34,7 @@ function randomDayVacation(){
    return "上班";
 }
 // 日报内容生成
-async function contentTxt (college){
+async function contentTxt (college,axios){
 if (college=="护理"){
   let { data: res } = await axios.request({
     method: "get",
@@ -68,7 +68,7 @@ if (college=="护理"){
 // 日报方法
 async function daily (axios, planId,college) {
 
-  let contentTxt  = contentTxt(college);
+  let contentTxt  = contentTxt(college,axios);
 
   let title1 = randomDayVacation();
     let dataForm = {
