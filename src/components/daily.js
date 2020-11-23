@@ -63,10 +63,12 @@ function contentTxts (config){
 
 // 日报方法
 async function daily (axios, planId,config) {
+  let thisTime = new Date();
 
-  let contentTxt = contentTxts(config);
+  if (thisTime.getHours() <= 8) {
+    let contentTxt = contentTxts(config);
 
-  let title1 = randomDayVacation();
+    let title1 = randomDayVacation();
     let dataForm = {
       attachmentList: [],
       attachments: "",
@@ -78,19 +80,20 @@ async function daily (axios, planId,config) {
     console.log("planId:"+planId)
 
     axios.defaults.baseURL = "https://api.moguding.net:9000";
-   // 发送日报签到请求
+    // 发送日报签到请求
     let { data: res } = await axios.request({
       method: "post",
       url: "/practice/paper/v1/save",
       data: dataForm,
     });
-
-    let msg = false;
-    if (res.code == 200) {
-       // 日报成功
-      msg = '日报打卡成功'
+        if (res.code == 200) {
+     return true;
+    } else{
+      return false;
     }
-    return msg;
+  } else {
+    return false;
+  }
 }
 
 module.exports = daily;

@@ -58,7 +58,7 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
      * 当每日签到成功后进行日报汇报
      */
     if (result) {
-       // 日报汇报
+       // 日报汇报  返回 true false
       const dayResult = await daily(axios, planId, config);
       // 日报汇报成功
       if (dayResult) {
