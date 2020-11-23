@@ -38,14 +38,15 @@ function randomDayVacation(){
 // 日报内容生成
 function contentTxts (config){
   let college = config.LEABLETI;
-  console.log("专业:"+college)
+  console.log("daily:41行 专业是:"+college)
   if (college=="护理"){
       var result  = huli.data
       var txt = "";
       let reslength = result.length
       for (let index = 0; index < 2; index++) {
         let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-        txt += result[resultRandomLength].txt
+        txt += result[resultRandomLength].txt;
+        txt += "   ";
       }
       return txt;
   }else if(college=="电子信息"){
@@ -54,7 +55,8 @@ function contentTxts (config){
       let reslength = result.length
       for (let index = 0; index < 2; index++) {
         let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-        txt += result[resultRandomLength].txt
+        txt += result[resultRandomLength].txt;
+        txt += "   ";
       }
       return txt;
   }
@@ -64,36 +66,36 @@ function contentTxts (config){
 // 日报方法
 async function daily (axios, planId,config) {
   let thisTime = new Date();
-
+  // 当前时刻小于8点或等于8点  日报签到
   if (thisTime.getHours() <= 8) {
-    let contentTxt = contentTxts(config);
 
-    let title1 = randomDayVacation();
+    let contentTxt = contentTxts(config);
+    let dayTitle = randomDayVacation();
+
     let dataForm = {
       attachmentList: [],
       attachments: "",
       content: contentTxt, //日报内容
       planId: planId,
       reportType: "day",
-      title: title1 //日报标题  上班或休假 每周有2天休假的时间
+      title: dayTitle //日报标题  上班或休假 每周有2天休假的时间
     }
-    console.log("planId:"+planId)
-
-    axios.defaults.baseURL = "https://api.moguding.net:9000";
+    
     // 发送日报签到请求
     let { data: res } = await axios.request({
       method: "post",
       url: "/practice/paper/v1/save",
       data: dataForm,
     });
-        if (res.code == 200) {
-     return true;
-    } else{
-      return false;
-    }
+    if (res.code == 200) {
+     return "daySuccess";
+    } 
   } else {
-    return false;
+    // 超过早上八点 不写日报
+     return "dayOverTime"
   }
+  // 异常
+  return "dayError";
 }
 
 module.exports = daily;

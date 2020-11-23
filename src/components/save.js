@@ -18,6 +18,7 @@ function saveType () {
 // 签到方法
 async function save (axios, planId) {
   let type = saveType();
+  /*
   let dataForm = {
     device: "iOS",
     planId: planId,
@@ -31,8 +32,8 @@ async function save (axios, planId) {
     province: "西安市",
     latitude: "34.256022",
   };
+ */
 
-  /*
   let dataForm = {
     device: "iOS",
     planId: planId,
@@ -46,7 +47,7 @@ async function save (axios, planId) {
     province: "咸阳市",
     latitude: "34.304881",
   };
-  */
+  
   console.log("Type:", type);
   // 发送签到请求
   let { data: res } = await axios.request({
