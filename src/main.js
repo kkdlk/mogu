@@ -15,10 +15,10 @@ let weeks = require("./components/weeks")
 // 传入运行的参数
 var args = process.argv.splice(2);
 
-/* for (let index = 0; index < args.length; index++) {
+ for (let index = 0; index < args.length; index++) {
    const element = args[index];
-   console.log("参数"+element)
- }*/
+   console.log("参数:"+element)
+ }
 
 if (args.length < 5) {
   console.log("参数传入不正确！");
@@ -37,7 +37,7 @@ let config = {
   token: args[3] || false,
   // 学院  护理 电子信息 
   LEABLETI: args[4],
-  // 周报开始时间 2020/07/20
+  // 周报开始时间 2020/11/23
   startTimeDate: args[5]
 };
 let reMindMsg = {
