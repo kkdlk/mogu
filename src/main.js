@@ -9,6 +9,7 @@ let login = require("./components/login");
 let getPlanId = require("./components/planId");
 let save = require("./components/save");
 let remind = require("./components/remind");
+let daily = require("./components/daily")
 // 传入运行的参数
 var args = process.argv.splice(2);
 if (args.length < 3) {
@@ -25,6 +26,8 @@ let config = {
   SCKEY: args[2],
   // 用户TOKEN
   token: args[3] || false,
+  // 用户分类 
+  college: args[4]
 };
 let reMindMsg = {
   // 消息标题
@@ -43,25 +46,40 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
     axios.defaults.headers.Authorization = token;
     // 获取需要签到的项目 - 最后一项
     const planId = await getPlanId(axios);
+
     // 签到结果
     const result = await save(axios, planId);
+    /**
+     * 当每日签到成功后进行日报汇报
+     */
     if (result) {
-      reMindMsg.text = `🎉 ${data.getFullYear()}年${
-        data.getMonth() + 1
-      }月${data.getDate()}日 蘑菇丁签到成功啦！ 🎉`;
-      reMindMsg.desp = "恭喜你蘑菇丁签到成功了！";
+       // 日报汇报
+      const dayResult = await daily(axios, planId,college);
+      // 日报汇报成功
+      if (dayResult) {
+        reMindMsg.text = `🎉 ${data.getFullYear()}年${
+          data.getMonth() + 1
+        }月${data.getDate()}日 蘑菇丁「日报☀️和每日签到📆」打卡成功啦！ 🎉`;
+        reMindMsg.desp = "恭喜你蘑菇丁「日报和每日签到」打卡成功了！";
+        // 发送消息
+        let msg = await remind(axios, config, reMindMsg);
+        console.log(msg);
+      } else {
+        reMindMsg.text = `🎉 ${data.getFullYear()}年${
+          data.getMonth() + 1
+        }月${data.getDate()}日 蘑菇丁「打卡签到📆」成功啦！❗️ ❗️ ❗️ 日报需要自己写了❗️ ❗️ ❗️ ❗️  🎉`;
+        reMindMsg.desp = "恭喜你蘑菇丁「打卡签到📆」成功了！❗️ ❗️ ❗️ 日报需要自己写了❗️ ❗️ ❗️ ❗️ ";
+         // 发送消息
+         let msg = await remind(axios, config, reMindMsg);
+         console.log(msg);
+      }
+    }else{
+      reMindMsg.text = `系统异常了 ❗️ ❗️  ❗️ ❗️  ❗️ ❗️ `;
+      reMindMsg.desp = "系统异常了 ❗️ ❗️  ❗️ ❗️  ❗️ ❗️";
+       // 发送消息
+       let msg = await remind(axios, config, reMindMsg);
+       console.log(msg);
     }
-    let msg = await remind(axios, config, reMindMsg);
-    // 日报结果
-    const result1 = await daily(axios, planId);
-    if (result1) {
-      reMindMsg.text = `🎉 ${data.getFullYear()}年${
-        data.getMonth() + 1
-      }月${data.getDate()}日 蘑菇丁日报打卡成功啦！ 🎉`;
-      reMindMsg.desp = "恭喜你蘑菇丁日报打卡成功了！";
-    }
-    let msg = await remind(axios, config, reMindMsg);
-    console.log(msg);
     return true;
   } else {
     return;

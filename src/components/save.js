@@ -31,6 +31,22 @@ async function save (axios, planId) {
     province: "西安市",
     latitude: "34.256022",
   };
+
+  /*
+  let dataForm = {
+    device: "iOS",
+    planId: planId,
+    country: "中国",
+    state: "NORMAL",
+    attendanceType: "",
+    address: "咸阳职业技术学院",
+    type: type,
+    longitude: "108.74309",
+    city: "秦都区",
+    province: "咸阳市",
+    latitude: "34.304881",
+  };
+  */
   console.log("Type:", type);
   // 发送签到请求
   let { data: res } = await axios.request({
