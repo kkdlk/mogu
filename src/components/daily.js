@@ -45,7 +45,7 @@ function contentTxts (config){
       let reslength = result.length
       for (let index = 0; index < 2; index++) {
         let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-        txt += result[resultRandomLength]
+        txt += result[resultRandomLength].txt
       }
       return txt;
   }else if(college=="电子信息"){
@@ -54,7 +54,7 @@ function contentTxts (config){
       let reslength = result.length
       for (let index = 0; index < 2; index++) {
         let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-        txt += result[resultRandomLength]
+        txt += result[resultRandomLength].txt
       }
       return txt;
   }
