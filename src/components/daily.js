@@ -34,34 +34,34 @@ function randomDayVacation(){
    return "上班";
 }
 // 日报内容生成
-async function contentTxt (college,axios){
-if (college=="护理"){
-  let { data: res } = await axios.request({
-    method: "get",
-    url: "../context/huli.json"
-  });
-  var result = res.data;
-  var txt = "";
-  let reslength = result.length
-  for (let index = 0; index < 2; index++) {
-    let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-    txt += result[resultRandomLength]
+ function contentTxt (college,axios){
+  if (college=="护理"){
+    let { data: res } =  axios.request({
+      method: "get",
+      url: "../context/huli.json"
+    });
+    var result = res.data;
+    var txt = "";
+    let reslength = result.length
+    for (let index = 0; index < 2; index++) {
+      let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
+      txt += result[resultRandomLength]
+    }
+    return txt;
+  }else if(college=="电子信息"){
+    let { data: res } =  axios.request({
+      method: "get",
+      url: "../context/dianzixinxi.json"
+    });
+    var result = res.data;
+    var txt = "";
+    let reslength = result.length
+    for (let index = 0; index < 2; index++) {
+      let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
+      txt += result[resultRandomLength]
+    }
+    return txt;
   }
-  return txt;
-}else if(college=="电子信息"){
-  let { data: res } = await axios.request({
-    method: "get",
-    url: "../context/dianzixinxi.json"
-  });
-  var result = res.data;
-  var txt = "";
-  let reslength = result.length
-  for (let index = 0; index < 2; index++) {
-    let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-    txt += result[resultRandomLength]
-  }
-  return txt;
-}
 }
 
 
