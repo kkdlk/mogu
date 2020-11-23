@@ -12,9 +12,12 @@ let remind = require("./components/remind");
 let daily = require("./components/daily")
 // 传入运行的参数
 var args = process.argv.splice(2);
-if (args.length < 3) {
+if (args.length < 4) {
   console.log("参数传入不正确！");
   return;
+}
+for (const key in args) {
+  console.log("参数："+ key)
 }
 // 用户相关配置
 let config = {
