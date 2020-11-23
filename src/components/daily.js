@@ -67,7 +67,7 @@ function contentTxts (config){
 async function daily (axios, planId,config) {
   let thisTime = new Date();
   // 当前时刻小于8点或等于8点  日报签到
-  if (thisTime.getHours() <= 8) {
+  if (thisTime.getHours() <= 8) { // 8点或8点钱 日报
 
     let contentTxt = contentTxts(config);
     let dayTitle = randomDayVacation();

@@ -61,7 +61,7 @@ async function months (axios, planId,config) {
     let contentTxt = contentTxts(config) //月报内容
     let monthNum = mGetDate(); //当月最大天数
     if (monthNum==thisTime.getDate()) { //当前月份最大天数等于现在天数 代表是月末
-        if (thisTime.getHours()<=8){
+        if (thisTime.getHours()<=8){  //月末的8点和8点前 月报
             let dataForm = {
                 attachmentList: [],
                 attachments: "",

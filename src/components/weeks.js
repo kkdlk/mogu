@@ -114,7 +114,7 @@ async function weeks (axios, planId,config) {
     let contentTxt = contentTxts(config); //周报内容
 
     if (getWeekDate()=="星期日") { 
-        if (thisTime.getHours()<=8){
+        if (thisTime.getHours()<=8){ //八点之前为签到成功
             let dataForm = {
                 attachmentList: [],
                 attachments: "",

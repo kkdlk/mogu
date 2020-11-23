@@ -8,7 +8,7 @@
 function saveType () {
   var date = new Date();
   let type = "START";
-  if (date.getHours() >= 18) {
+  if (date.getHours() >= 15) {
     type = "END";
   }
   console.log(date.getHours());
@@ -18,7 +18,7 @@ function saveType () {
 // 签到方法
 async function save (axios, planId) {
   let type = saveType();
-  /*
+    /*
   let dataForm = {
     device: "iOS",
     planId: planId,
