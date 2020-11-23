@@ -12,8 +12,9 @@ let remind = require("./components/remind");
 let daily = require("./components/daily")
 // 传入运行的参数
 var args = process.argv.splice(2);
-for (const key in args) {
-   console.log("参数"+key)
+for (let index = 0; index < args.length; index++) {
+  const element = array[index];
+  console.log("参数"+element)
 }
 if (args.length < 4) {
   console.log("参数传入不正确！");
