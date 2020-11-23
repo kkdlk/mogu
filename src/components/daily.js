@@ -36,9 +36,9 @@ function randomDayVacation(){
    return "上班";
 }
 // 日报内容生成
-function contentTxts (config,axios){
-  axios.defaults.baseURL = "";
+function contentTxts (config){
   let college = config.LEABLETI;
+  console.log("专业:"+college)
   if (college=="护理"){
       var result  = huli.data
       var txt = "";
@@ -64,7 +64,7 @@ function contentTxts (config,axios){
 // 日报方法
 async function daily (axios, planId,config) {
 
-  let contentTxt = contentTxts(config,axios);
+  let contentTxt = contentTxts(config);
 
   let title1 = randomDayVacation();
     let dataForm = {
