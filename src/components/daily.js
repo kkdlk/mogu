@@ -34,11 +34,11 @@ function randomDayVacation(){
    return "上班";
 }
 // 日报内容生成
-function contentTxts (config,axios){
+async function contentTxts (config,axios){
   let college = config.LEABLETI;
 
   if (college=="护理"){
-    let { data: res } =  axios.request({
+    let { data: res } = await axios.request({
       method: "get",
       url: "../context/huli.json"
     });
@@ -51,7 +51,7 @@ function contentTxts (config,axios){
     }
     return txt;
   }else if(college=="电子信息"){
-    let { data: res } =  axios.request({
+    let { data: res } = await axios.request({
       method: "get",
       url: "../context/dianzixinxi.json"
     });
