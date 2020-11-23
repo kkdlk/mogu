@@ -13,7 +13,7 @@ let daily = require("./components/daily")
 // 传入运行的参数
 var args = process.argv.splice(2);
 for (let index = 0; index < args.length; index++) {
-  const element = array[index];
+  const element = args[index];
   console.log("参数"+element)
 }
 if (args.length < 4) {
