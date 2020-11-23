@@ -20,10 +20,10 @@ var args = process.argv.splice(2);
    console.log("参数:"+element)
  }
 
-if (args.length < 5) {
-  console.log("参数传入不正确！");
-  return;
-}
+ if (args.length < 5) {
+   console.log("参数传入不正确！");
+   return;
+ }
 
 // 用户相关配置
 let config = {
@@ -38,7 +38,7 @@ let config = {
   // 学院  护理 电子信息 
   LEABLETI: args[4],
   // 周报开始时间 2020/11/23
-  startTimeDate: args[5]
+  STARTTIMEDATE: args[5]
 };
 let reMindMsg = {
   // 消息标题
