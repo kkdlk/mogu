@@ -35,8 +35,8 @@ function randomDayVacation(){
 }
 // 日报内容生成
 function contentTxts (config,axios){
+  axios.defaults.baseURL = "";
   let college = config.LEABLETI;
-
   if (college=="护理"){
     axios.get("../context/huli.json").then(response =>{
       var result = response.data.data;
@@ -78,6 +78,8 @@ async function daily (axios, planId,config) {
       title: title1 //日报标题  上班或休假 每周有2天休假的时间
     }
     console.log("planId:"+planId)
+    
+    axios.defaults.baseURL = "https://api.moguding.net:9000";
    // 发送日报签到请求
     let { data: res } = await axios.request({
       method: "post",
