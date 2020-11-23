@@ -57,48 +57,18 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
     axios.defaults.headers.Authorization = token;
     // 获取需要签到的项目 - 最后一项
     const planId = await getPlanId(axios);
-    //~~~~~~~~~~~~~~~~~ 周报汇报结果
-    const weeksResult = await weeks(axios,planId,config)
-    if (weeksResult=="weekSuccess"){
-      reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 
-        蘑菇丁「月报汇报」打卡成功啦！ 🎉`;
-        reMindMsg.desp = "恭喜你蘑菇丁「周报汇报」打卡成功了！";
-        //       msg ______  发送消息
-        let msg = await remind(axios, config, reMindMsg);
-    }else {
-        reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 
-        蘑菇丁「周报汇报」打卡失败！❗️ ❗️`;
-        reMindMsg.desp = "蘑菇丁「周报汇报」打卡失败！❗️ ❗️";
-          //       msg ______  发送消息
-        let msg = await remind(axios, config, reMindMsg);
-    }
-
-
-    //~~~~~~~~~~~~~~~~~ 月报汇报结果
-    const monthResult = await month(axios,planId,config)
-    if (monthResult=="monthSuccess"){
-      reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 
-        蘑菇丁「月报汇报」打卡成功啦！ 🎉`;
-        reMindMsg.desp = "恭喜你蘑菇丁「月报汇报」打卡成功了！";
-        //       msg ______  发送消息
-        let msg = await remind(axios, config, reMindMsg);
-    }else {
-      reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 
-      蘑菇丁「月报汇报」打卡失败！❗️ ❗️`;
-      reMindMsg.desp = "蘑菇丁「月报汇报」打卡失败！❗️ ❗️";
-      //       msg ______  发送消息
-      let msg = await remind(axios, config, reMindMsg);
-    }
-    // ~~~~~~~~~~~~~~~~~ 签到结果
+    // ~~~~~~~~~~~~~~~~~ 每日签到 签到结果
     const result = await save(axios, planId);
     /**
      * 当每日签到成功后进行日报汇报
      */
     if (result) {
+      console.log("每日签到成功")
        // ~~~~~~~~~~~~~~~~~日报汇报  返回 daySuccess  dayError
       const dayResult = await daily(axios, planId, config);
       // ____日报汇报成功
       if (dayResult=="daySuccess") {
+        console.log("日报成功")
         reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 
         蘑菇丁「日报☀️和每日签到 📆 」打卡成功啦！ 🎉`;
         reMindMsg.desp = "恭喜你蘑菇丁「日报和每日签到」打卡成功了！";
@@ -107,6 +77,7 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
         console.log(msg);
         // ____日报超过8点
       } else if (dayResult=="dayOverTime"){
+        console.log("日报超过八点了")
         reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日
         蘑菇丁「打卡签到📆」成功啦！超过八点了🎉`;
         reMindMsg.desp = "恭喜你蘑菇丁「打卡签到📆」成功了！超过八点了，如果前面没有收到签到日报成功消息，请手动查看蘑菇丁！";
@@ -114,6 +85,7 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
          let msg = await remind(axios, config, reMindMsg);
          console.log(msg);
       } else {
+        console.log("日报失败了")
         // ____失败了
         reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日
         蘑菇丁「打卡签到📆」失败了啦！❗️ ❗️  ❗️ ❗️  ❗️ ❗️`;
@@ -123,12 +95,39 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
          console.log(msg);
       }
     }else{
+      console.log("每日签到失败了")
       reMindMsg.text = `系统异常了 ❗️ ❗️  ❗️ ❗️  ❗️ ❗️ `;
       reMindMsg.desp = "系统异常了 ❗️ ❗️  ❗️ ❗️  ❗️ ❗️";
        //       msg ______    发送消息
        let msg = await remind(axios, config, reMindMsg);
        console.log(msg);
     }
+
+    //~~~~~~~~~~~~~~~~~ 月报汇报结果
+    const monthResult = await month(axios,planId,config)
+    if (monthResult=="monthSuccess"){
+      reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 
+        蘑菇丁「月报汇报」打卡成功啦！ 🎉`;
+        reMindMsg.desp = "恭喜你蘑菇丁「月报汇报」打卡成功了！";
+        //       msg ______  发送消息
+        let msg = await remind(axios, config, reMindMsg);
+    }
+   //~~~~~~~~~~~~~~~~~ 周报汇报结果
+  const weeksResult = await weeks(axios,planId,config)
+  if (weeksResult=="weekSuccess"){
+    reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 
+      蘑菇丁「月报汇报」打卡成功啦！ 🎉`;
+      reMindMsg.desp = "恭喜你蘑菇丁「周报汇报」打卡成功了！";
+      //       msg ______  发送消息
+      let msg = await remind(axios, config, reMindMsg);
+  }
+
+
+
+
+
+
+
     return true;
   } else {
     return;
