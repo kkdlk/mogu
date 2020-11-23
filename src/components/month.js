@@ -13,15 +13,15 @@ let dianzixinxi = require("../context/dianzixinxi.json")
 
 
 
-// 月报内容生成
+// 日报内容生成
 function contentTxts (config){
     let college = config.LEABLETI;
-    console.log("daily:41行 专业是:"+college)
+    console.log("month:19行 专业是:"+college)
     if (college=="护理"){
         var result  = huli.data
         var txt = "";
         let reslength = result.length
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 4; index++) {
           let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
           txt += result[resultRandomLength].txt;
           txt += "   ";
@@ -31,7 +31,7 @@ function contentTxts (config){
         var result  = dianzixinxi.data
         var txt = "";
         let reslength = result.length
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 4; index++) {
           let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
           txt += result[resultRandomLength].txt;
           txt += "   ";

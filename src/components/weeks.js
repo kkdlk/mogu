@@ -81,7 +81,7 @@ function getWeekDate() {
         sDate; //开学之日，日期对象
     var rDateStr = /\d{4}[\/-]\d{1,2}[\/-]\d{1,2}/g; // 简单的日期格式校验：2013/12/19
     if (!rDateStr.test(start)) {
-        alert("请使用合法的开学日期！！！");
+        console.log("请使用合法的开学日期！！！");
         return weekInfo;
     }
     sDate = new Date(start.replace("-", "/"));
