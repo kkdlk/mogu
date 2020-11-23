@@ -34,7 +34,7 @@ function randomDayVacation(){
    return "上班";
 }
 // 日报内容生成
-function contentTxt (college){
+async function contentTxt (college){
 if (college=="护理"){
   let { data: res } = await axios.request({
     method: "get",
