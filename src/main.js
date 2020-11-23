@@ -12,13 +12,14 @@ let remind = require("./components/remind");
 let daily = require("./components/daily")
 // 传入运行的参数
 var args = process.argv.splice(2);
+for (const key in args) {
+   console.log("参数"+key)
+}
 if (args.length < 4) {
   console.log("参数传入不正确！");
   return;
 }
-for (const key in args) {
-  console.log("参数："+ key)
-}
+
 // 用户相关配置
 let config = {
   // 用户手机号
@@ -30,7 +31,7 @@ let config = {
   // 用户TOKEN
   token: args[3] || false,
   // 用户分类 
-  college: args[4]
+  LEABLETI: args[4]
 };
 let reMindMsg = {
   // 消息标题
@@ -57,7 +58,7 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
      */
     if (result) {
        // 日报汇报
-      const dayResult = await daily(axios, planId,college);
+      const dayResult = await daily(axios, planId, config);
       // 日报汇报成功
       if (dayResult) {
         reMindMsg.text = `🎉 ${data.getFullYear()}年${

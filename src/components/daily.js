@@ -34,7 +34,9 @@ function randomDayVacation(){
    return "上班";
 }
 // 日报内容生成
- function contentTxt (college,axios){
+function contentTxts (config,axios){
+  let college = config.LEABLETI;
+
   if (college=="护理"){
     let { data: res } =  axios.request({
       method: "get",
@@ -62,13 +64,14 @@ function randomDayVacation(){
     }
     return txt;
   }
+  return "";
 }
 
 
 // 日报方法
-async function daily (axios, planId,college) {
+async function daily (axios, planId,config) {
 
-  let contentTxt  = contentTxt(college,axios);
+  let contentTxt = contentTxts(config,axios);
 
   let title1 = randomDayVacation();
     let dataForm = {
