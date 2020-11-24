@@ -6,39 +6,64 @@
  */
 
 
-let huli = require("../context/huli.json")
-let dianzixinxi = require("../context/dianzixinxi.json")
-// 周报内容生成
-function contentTxts (config){
-    let college = config.LEABLETI;
-    console.log("weeks:14行 专业是:"+college)
-    if (college=="护理"){
-        var result  = huli.data
-        var txt = "";
-        let reslength = result.length
-        for (let index = 0; index < 4; index++) {
-          let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-          txt += result[resultRandomLength].txt;
-          txt += "   ";
-        }
-        return txt;
-    }else if(college=="电子信息"){
-        var result  = dianzixinxi.data
-        var txt = "";
-        let reslength = result.length
-        for (let index = 0; index < 4; index++) {
-          let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-          txt += result[resultRandomLength].txt;
-          txt += "   ";
-        }
-        return txt;
-    }
-    return "";
-  }
-  
-// 获取当前周的周一或者周天的时间
+let contextTexts = require("../components/contextText")
+
+
+   
 /**
- * 
+ * 周报提交
+ * @param {axios} axios 
+ * @param {分类} planId 
+ * @param {配置} config 
+ */
+async function weeks (axios, planId,config) {
+    let thisTime = new Date();
+    let contentTxt = contextTexts(config,3); //周报内容
+    // 周日早上6点-8点之间签到
+    if (getWeekDate()=="星期日"&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { 
+            let dataForm = {
+                attachmentList: [],
+                attachments: "",
+                content: contentTxt, //周报内容
+                planId: planId,
+                reportType: "week",
+                title: "第"+(TodayInfo(config.startTimeDate).week)+"周，周报", //周报标题  
+                weeks: "第"+(TodayInfo(config.startTimeDate).week)+"周", // 第x周 从startTimeDate开始
+                startTime: getFirstDayOfWeek(new Date(),1), // 当前周 开始时间
+                endTime: getFirstDayOfWeek(new Date(),7) // 当前周 结束时间
+              }
+        
+            // 发送日报签到请求
+            let { data: res } = await axios.request({
+                method: "post",
+                url: "/practice/paper/v1/save",
+                data: dataForm
+            });
+            if (res.code == 200) {
+                return "周报填写成功";
+            } else{
+                return false;
+            }
+    }else{
+        console.log("当前时间不是周末，不写周报哦")
+        return "OUTTIME"
+    }
+}
+
+
+
+/**
+ * 当前时间是周几
+ */
+function getWeekDate() {
+    var now = new Date();
+    var day = now.getDay();
+    var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+    var week = weeks[day];
+    return week;
+}  
+/**
+ * 获取当前周的周一或者周天的时间
  * @param {时间类型，当前时间} date 
  * @param {返回当前时间的周几} n 
  */
@@ -55,22 +80,14 @@ function getFirstDayOfWeek (date,n) {
     }
     return "";
 };
-// 当前周几
-function getWeekDate() {
-    var now = new Date();
-    var day = now.getDay();
-    var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
-    var week = weeks[day];
-    return week;
-  }     
 /**
  * 
  * @param {起始时间} start 
- * 调用 
+ * 调用 当前时间距离指定时间（start）是第几周
  * var td = TodayInfo("2020/07/20");      
  * console.log("今天是自2020/07/20日，开学以来的第 " + td.week + " 周，今天星期" + td.day);
  */
-  function TodayInfo(start) {
+function TodayInfo(start) {
     var WEEKLEN = 7, // 一周7天为常量
         WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"],
         weekInfo = {"week": null, "day": null}, // 初始化返回信息，默认第null周，星期null
@@ -103,47 +120,9 @@ function getWeekDate() {
     return weekInfo;
 }
 
-/**
- * 周报提交
- * @param {axios} axios 
- * @param {分类} planId 
- * @param {配置} config 
- */
-async function weeks (axios, planId,config) {
-    let thisTime = new Date();
-    let contentTxt = contentTxts(config); //周报内容
 
-    if (getWeekDate()=="星期日") { 
-        if (thisTime.getHours()<=8){ //八点之前为签到成功
-            let dataForm = {
-                attachmentList: [],
-                attachments: "",
-                content: contentTxt, //周报内容
-                planId: planId,
-                reportType: "week",
-                title: "第"+(TodayInfo(config.startTimeDate).week)+"周，周报", //周报标题  
-                weeks: "第"+(TodayInfo(config.startTimeDate).week)+"周", // 第x周 从startTimeDate开始
-                startTime: getFirstDayOfWeek(new Date(),1), // 当前周 开始时间
-                endTime: getFirstDayOfWeek(new Date(),7) // 当前周 结束时间
-              }
-        
-            // 发送日报签到请求
-            let { data: res } = await axios.request({
-                method: "post",
-                url: "/practice/paper/v1/save",
-                data: dataForm
-            });
-            if (res.code == 200) {
-                return "weekSuccess";
-            } 
-        }else{
-            console.log("当前时间不是月末的8点前，月报不会填写!")
-        }
-    }else{
-        console.log("当前时间不是周末，不写周报哦")
-    }
-    return "weekError";
-}
+
+
 
 
 module.exports = weeks;
