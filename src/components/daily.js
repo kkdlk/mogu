@@ -42,7 +42,7 @@ async function daily (axios, planId,config) {
   } else {
     console.warn("--------Wraing---------超过早上八点 不写日报")
     // 超过早上八点 不写日报
-     return "日报失败，当前时间不在6点-8点之间";
+     return "OUTTIME";
   }
 }
 

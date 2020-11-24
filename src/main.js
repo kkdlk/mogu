@@ -74,10 +74,12 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
           // ~~~~~~~~~~~~~~~~~日报汇报  返回 daySuccess  dayError
           const dayResult = await daily(axios, planId, config);
           if(dayResult) {
-            reMindMsg.text = `🎉 ${data.getFullYear()}年${
-              data.getMonth() + 1
-            }月${data.getDate()}日 蘑菇丁【${result}签到、日报】成功啦！ 🎉`;
-            reMindMsg.desp = `每日打卡信息：${result}—日报信息：${dayResult}`;
+            if(dayResult!="OUTTIME"){
+              reMindMsg.text = `🎉 ${data.getFullYear()}年${
+                data.getMonth() + 1
+              }月${data.getDate()}日 蘑菇丁【${result}签到、日报】成功啦！ 🎉`;
+              reMindMsg.desp = `每日打卡信息：${result}—日报信息：${dayResult}`;
+            }
           }else {
             reMindMsg.text = `🎉 ${data.getFullYear()}年${
               data.getMonth() + 1
