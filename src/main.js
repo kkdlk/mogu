@@ -57,7 +57,7 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
     axios.defaults.headers.Authorization = token;
     // 获取需要签到的项目 - 最后一项
     const planId = await getPlanId(axios);
-    if (!planId) {
+    if (planId==false) {
        planId = await getPlanId(axios);
     }
     // ~~~~~~~~~~~~~~~~~ 每日签到 签到结果
