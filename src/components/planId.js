@@ -15,6 +15,11 @@ async function planId(axios) {
     url: "/practice/plan/v1/getPlanByStu",
     data: dataForm,
   });
-  return res.data.pop().planId;
+  if(res.data.code==200) {
+    return res.data.pop().planId;
+  }else{
+    return false;
+  }
+  
 }
 module.exports = planId;
