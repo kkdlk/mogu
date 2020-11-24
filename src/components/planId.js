@@ -19,6 +19,6 @@ async function planId(axios) {
   if(res.data.code==200) {
     return res.data.pop().planId;
   }
-  return false;
+  return planId(axios);
 }
 module.exports = planId;
