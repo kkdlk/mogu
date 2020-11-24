@@ -22,24 +22,24 @@ function contentTxts (config,iterNum){
     console.log("专业是:"+college)
     if (college=="护理"){
         var result  = huli.data
-        var txt = "";
+        var texts = "";
         let reslength = result.length
         for (let index = 0; index < iterNum; index++) {
           let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-          txt += result[resultRandomLength].txt;
-          txt += "   ";
+          texts += result[resultRandomLength].txt;
+          texts += ";";
         }
-        return txt;
+        return texts;
     }else if(college=="电子信息"){
         var result  = dianzixinxi.data
-        var txt = "";
+        var texts = "";
         let reslength = result.length
         for (let index = 0; index < iterNum; index++) {
           let resultRandomLength = Math.round(Math.random()*reslength) // 从0~数据长度 角标
-          txt += result[resultRandomLength].txt;
-          txt += "   ";
+          texts += result[resultRandomLength].txt;
+          texts += ";";
         }
-        return txt;
+        return texts;
     }
     return "";
   }

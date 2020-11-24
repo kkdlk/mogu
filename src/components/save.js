@@ -17,6 +17,8 @@ function saveType () {
 
 // 签到方法
 async function save (axios, planId) {
+  let thisTime = new Date();
+ 
   let type = saveType();
     /*
   let dataForm = {
@@ -49,18 +51,34 @@ async function save (axios, planId) {
   };
   
   console.log("Type:", type);
-  // 发送签到请求
-  let { data: res } = await axios.request({
-    method: "post",
-    url: "/attendence/clock/v1/save",
-    data: dataForm,
-  });
-  
-  let msg = false;
-  if (res.code == 200) {
-    // 签到成功
-    msg = type === "START" ? "上班" : "下班";
+  if (thisTime.getHours()<=8&&thisTime.getHours()>=6){
+      // 发送签到请求
+    let { data: res } = await axios.request({
+      method: "post",
+      url: "/attendence/clock/v1/save",
+      data: dataForm,
+    });
+    let msg = false;
+    if (res.code == 200) {
+      // 签到成功
+      msg = type === "START" ? "上班" : "下班";
+    }
+    return msg;
+  } else if(thisTime.getHours()>=17&&thisTime.getHours()<=18){
+      // 发送签到请求
+      let { data: res } = await axios.request({
+        method: "post",
+        url: "/attendence/clock/v1/save",
+        data: dataForm,
+      });
+      let msg = false;
+      if (res.code == 200) {
+        // 签到成功
+        msg = type === "START" ? "上班" : "下班";
+      }
+      return msg;
+  }else {
+    return "OUTTIME"
   }
-  return msg;
 }
 module.exports = save;
