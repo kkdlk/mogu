@@ -57,6 +57,12 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
     axios.defaults.headers.Authorization = token;
     // 获取需要签到的项目 - 最后一项
     const planId = await getPlanId(axios);
+    if (planId == "ERRORTOKEN"){
+      reMindMsg.desp = `TOKEN过期了`
+      reMindMsg.text = `TOKEN过期了`;
+      //       msg ______  发送消息
+      await remind(axios, config, reMindMsg);
+    }
     // ~~~~~~~~~~~~~~~~~ 每日签到 签到结果
     const result = await save(axios, planId);
     /**

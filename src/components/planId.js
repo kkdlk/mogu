@@ -5,11 +5,11 @@
  * @Description: 获取签到的ID
  */
 
+
 async function planId(axios) {
   let dataForm = {
     paramsType: "student",
   };
-
   let { data: res } = await axios.request({
     method: "post",
     url: "/practice/plan/v1/getPlanByStu",
@@ -18,7 +18,9 @@ async function planId(axios) {
   console.log("planid："+res.data[0].planId)
   if(res.code==200) {
     return res.data.pop().planId;
+  }else{
+    console.log("TOKEN过期了")
+    return "ERRORTOKEN"
   }
-  return planId(axios);
 }
 module.exports = planId;
