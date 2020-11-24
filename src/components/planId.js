@@ -16,7 +16,7 @@ async function planId(axios) {
     data: dataForm,
   });
   console.log("planid："+res.data.pop().planId)
-  if(res.data.code==200) {
+  if(res.code==200) {
     return res.data.pop().planId;
   }
   return planId(axios);
