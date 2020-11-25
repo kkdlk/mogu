@@ -16,11 +16,10 @@ async function planId(axios) {
     data: dataForm,
   });
   if(res.code==200) {
-    console.log("planId中的状态码："+res.code+"；planID的值："+res.data[0].planId);
+    console.log("Token可用：planId中的状态码："+res.code+"；planID的值："+res.data[0].planId);
     return res.data.pop().planId;
-  }else{
-    console.log("TOKEN过期了")
-    return "ERRORTOKEN"
   }
+  console.log("TOKEN过期了")
+  return false
 }
 module.exports = planId;

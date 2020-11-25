@@ -12,11 +12,11 @@ async function login(axios, config) {
      // 获取需要签到的项目 - 最后一项
     const planId = await getPlanId(axios);
     if (planId!="ERRORTOKEN"){
-      console.log("自行提供Token");
+      console.info("token可以使用");
       return config.token;
     }
   }
-  console.log("token失效，自行登录！")
+  console.info("token失效，自行登录得到Token！")
   axios.defaults.headers.Authorization = "";
 
   let dataForm = {
@@ -32,10 +32,10 @@ async function login(axios, config) {
   });
   if (res.code == 200) {
     // 登录成功
+    console.log("Token登录获取成功！")
     return res.data.token;
-  } else {
+  } 
     // 登录失败
     return false;
-  }
 }
 module.exports = login;
