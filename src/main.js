@@ -77,8 +77,8 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
             if(dayResult!="OUTTIME"){
               reMindMsg.text = `🎉 ${data.getFullYear()}年${
                 data.getMonth() + 1
-              }月${data.getDate()}日 蘑菇丁【${result}签到、日报】成功啦！ 🎉`;
-              reMindMsg.desp = `每日打卡信息：${result}—日报信息：${dayResult}`;
+              }月${data.getDate()}日 蘑菇丁【${config.phone}的${result}签到、日报】成功啦！ 🎉`;
+              reMindMsg.desp = `每日打卡信息：${config.phone}的${result}—日报信息：${dayResult}`;
             }
           }else {
             reMindMsg.text = `🎉 ${data.getFullYear()}年${
@@ -103,15 +103,15 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
       if (monthResult !="ErrorTimeOut") { //在时间范围内并且返回true 就提示成功
         reMindMsg.text = `🎉 ${data.getFullYear()}年${
           data.getMonth() + 1
-        }月${data.getDate()}日 蘑菇丁【${monthResult}】成功！ 🎉`;
-        reMindMsg.desp = `${monthResult}`;
+        }月${data.getDate()}日 蘑菇丁【${config.phone}的${monthResult}】成功！ 🎉`;
+        reMindMsg.desp = `${config.phone}的${monthResult}`;
         //       msg ______    发送消息
         await remind(axios, config, reMindMsg);
       }
     }else{
       reMindMsg.text = `🎉 ${data.getFullYear()}年${
         data.getMonth() + 1
-      }月${data.getDate()}日 蘑菇丁【${monthResult}】❗️ ❗️ ❗️ ❗️ 🎉`;
+      }月${data.getDate()}日 蘑菇丁【${config.phone}的${monthResult}】❗️ ❗️ ❗️ ❗️ 🎉`;
       reMindMsg.desp = `${monthResult}❗️ ❗️ ❗️ ❗️`;
       //       msg ______    发送消息
        await remind(axios, config, reMindMsg);
@@ -125,16 +125,16 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
         if(weeksResult!="OUTTIME"){
           reMindMsg.text = `🎉 ${data.getFullYear()}年${
             data.getMonth() + 1
-          }月${data.getDate()}日 蘑菇丁【${weeksResult}】 🎉`;
-          reMindMsg.desp = `${weeksResult}`;
+          }月${data.getDate()}日 蘑菇丁【${config.phone}的${weeksResult}】 🎉`;
+          reMindMsg.desp = `${config.phone}的${weeksResult}`;
           //       msg ______    发送消息
           await remind(axios, config, reMindMsg);
         }
     }else{
       reMindMsg.text = `🎉 ${data.getFullYear()}年${
         data.getMonth() + 1
-      }月${data.getDate()}日 蘑菇丁【${weeksResult} ❗️ ❗️ ❗️ ❗️  】 🎉`;
-      reMindMsg.desp = `${weeksResult}`;
+      }月${data.getDate()}日 蘑菇丁【${config.phone}的${weeksResult} ❗️ ❗️ ❗️ ❗️  】 🎉`;
+      reMindMsg.desp = `${config.phone}的${weeksResult}`;
       //       msg ______    发送消息
       await remind(axios, config, reMindMsg);
     }
