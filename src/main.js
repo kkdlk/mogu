@@ -58,8 +58,8 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
     // 获取需要签到的项目 - 最后一项
     const planId = await getPlanId(axios);
                                                           if (planId == "ERRORTOKEN"){
-                                                            reMindMsg.desp = `TOKEN过期了`
-                                                            reMindMsg.text = `TOKEN过期了`;
+                                                            reMindMsg.desp = `${config.phone}的，TOKEN过期了`
+                                                            reMindMsg.text = `${config.phone}的，TOKEN过期了`;
                                                             //       msg ______  发送消息
                                                             await remind(axios, config, reMindMsg);
                                                           }
