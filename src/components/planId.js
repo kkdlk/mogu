@@ -15,8 +15,8 @@ async function planId(axios) {
     url: "/practice/plan/v1/getPlanByStu",
     data: dataForm,
   });
-  console.log("planid："+res.data[0].planId)
   if(res.code==200) {
+    console.log("planId中的状态码："+res.code+"；planID的值："+res.data[0].planId);
     return res.data.pop().planId;
   }else{
     console.log("TOKEN过期了")
