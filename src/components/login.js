@@ -16,8 +16,9 @@ async function login(axios, config) {
       return config.token;
     }
   }
+  console.log("token失效，自行登录！")
   axios.defaults.headers.Authorization = "";
-  
+
   let dataForm = {
     phone: config.phone,
     password: config.password,
