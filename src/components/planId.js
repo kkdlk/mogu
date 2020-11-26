@@ -4,9 +4,8 @@
  * @LastEditTime: 2020-11-06 21:29:44
  * @Description: 获取签到的ID
  */
-
-
-async function planId(axios) {
+ async function planId(axios) {
+  
   let dataForm = {
     paramsType: "student",
   };
@@ -18,9 +17,11 @@ async function planId(axios) {
   if(res.code==200) {
     console.log("Token可用：planId中的状态码："+res.code+"；planID的值："+res.data[0].planId);
     return res.data.pop().planId;
-  }else {
+  }else if(res.code==401){
     console.log("TOKEN过期了")
     return "ERRORTOKEN";
+  }else {
+    planId(axios);
   }
 }
 module.exports = planId;

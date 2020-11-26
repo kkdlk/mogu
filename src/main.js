@@ -64,7 +64,6 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
      */
     if (result) {
       if (result != "OUTTIME") {
-        console.log("每日签到成功")
         // ~~~~~~~~~~~~~~~~~日报汇报  返回 daySuccess  dayError
         const dayResult = await daily(axios, planId, config);
         if (dayResult) {

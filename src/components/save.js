@@ -52,6 +52,7 @@ async function save (axios, planId) {
   
   console.log("Type:", type);
   if (thisTime.getHours()<=8&&thisTime.getHours()>=6){
+    console.log("上班打卡成功")
       // 发送签到请求
     let { data: res } = await axios.request({
       method: "post",
@@ -64,7 +65,8 @@ async function save (axios, planId) {
       msg = type === "START" ? "上班" : "下班";
     }
     return msg;
-  } else if(thisTime.getHours()>=17&&thisTime.getHours()<=18){
+  } else if(thisTime.getHours()<=18&&thisTime.getHours()>=17){
+    console.log("下班打卡成功")
       // 发送签到请求
       let { data: res } = await axios.request({
         method: "post",
