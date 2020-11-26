@@ -18,9 +18,10 @@ let contextTexts = require("../components/contextText")
  */
 async function weeks (axios, planId,config) {
     let thisTime = new Date();
-    let contentTxt = contextTexts(config,3); //周报内容
+    
     // 周日早上6点-8点之间签到
     if (getWeekDate()=="星期一"&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { 
+        let contentTxt = contextTexts(config,3); //周报内容
             let dataForm = {
                 attachmentList: [],
                 attachments: "",
@@ -33,7 +34,7 @@ async function weeks (axios, planId,config) {
                 endTime: getFirstDayOfWeek(new Date(),7) // 当前周 结束时间
               }
         
-            // 发送日报签到请求
+            // 发送周报签到请求
             let { data: res } = await axios.request({
                 method: "post",
                 url: "/practice/paper/v1/save",
@@ -41,13 +42,12 @@ async function weeks (axios, planId,config) {
             });
             if (res.code == 200) {
                 return "周报填写成功";
-            } else{
-                return false;
             }
     }else{
         console.log("当前时间不是周一，不写周报哦")
         return "OUTTIME"
     }
+    return false;
 }
 
 

@@ -29,9 +29,9 @@ async function months (axios, planId,config) {
 
     let thisTime = new Date();
     let monthTitle = (thisTime.getFullYear())+"年"+(thisTime.getMonth()+1)+"月"+",月报。" //拼接月报标题 格式：2020年11月,月报。
-    let contentTxt = contextTexts(config,4) //月报内容
    // let monthNum = mGetDate(); //当月最大天数
     if (thisTime.getDate()==1&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { // 月末的6点-8点之间
+        let contentTxt = contextTexts(config,4) //月报内容
             let dataForm = {
                 attachmentList: [],
                 attachments: "",
@@ -40,7 +40,7 @@ async function months (axios, planId,config) {
                 reportType: "month",
                 title: monthTitle //月报标题  上班或休假 每周有2天休假的时间
               }
-            // 发送日报签到请求
+            // 发送月报签到请求
             let { data: res } = await axios.request({
                 method: "post",
                 url: "/practice/paper/v1/save",
