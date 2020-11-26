@@ -20,7 +20,7 @@ async function weeks (axios, planId,config) {
     let thisTime = new Date();
     let contentTxt = contextTexts(config,3); //周报内容
     // 周日早上6点-8点之间签到
-    if (getWeekDate()=="星期日"&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { 
+    if (getWeekDate()=="星期一"&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { 
             let dataForm = {
                 attachmentList: [],
                 attachments: "",
@@ -45,7 +45,7 @@ async function weeks (axios, planId,config) {
                 return false;
             }
     }else{
-        console.log("当前时间不是周末，不写周报哦")
+        console.log("当前时间不是周一，不写周报哦")
         return "OUTTIME"
     }
 }

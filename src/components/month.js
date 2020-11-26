@@ -31,7 +31,7 @@ async function months (axios, planId,config) {
     let monthTitle = (thisTime.getFullYear())+"年"+(thisTime.getMonth()+1)+"月"+",月报。" //拼接月报标题 格式：2020年11月,月报。
     let contentTxt = contextTexts(config,4) //月报内容
     let monthNum = mGetDate(); //当月最大天数
-    if (monthNum==thisTime.getDate()&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { // 月末的6点-8点之间
+    if (thisTime.getDate()==1&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { // 月末的6点-8点之间
             let dataForm = {
                 attachmentList: [],
                 attachments: "",
@@ -50,7 +50,7 @@ async function months (axios, planId,config) {
                 return "月报填写成功";
             }
     }else{
-        console.log("当前时间不是月末，不写月报哦")
+        console.log("当前时间不是月初，不写月报哦")
         return "ErrorTimeOut"
     }
     return false;
