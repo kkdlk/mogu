@@ -19,7 +19,8 @@ let dianzixinxi = require("../context/dianzixinxi.json")
  */
 function contentTxts (config,iterNum){
     try {
-      console.log("日报内容生成开始")
+      if(iterNum==2){console.log("日报内容生成开始")}else if(iterNum==3){console.log("周报内容生成开始")}else if(iterNum==4){console.log("月报内容生成开始");}
+      
       let college = config.LEABLETI;
       console.log("专业是:"+college)
       if (college=="护理"){
@@ -31,7 +32,7 @@ function contentTxts (config,iterNum){
             texts += result[resultRandomLength].txt;
             texts += ";";
           }
-          console.log("报告内容生成成功")
+          if(iterNum==2){console.log("日报内容生成SUCCESS")}else if(iterNum==3){console.log("周报内容生成SUCCESS")}else if(iterNum==4){console.log("月报内容生成SUCCESS");}
           return texts;
       }else if(college=="电子信息"){
           var result  = dianzixinxi.data
@@ -42,13 +43,13 @@ function contentTxts (config,iterNum){
             texts += result[resultRandomLength].txt;
             texts += ";";
           }
-          console.log("报告内容生成成功")
+          if(iterNum==2){console.log("日报内容生成SUCCESS")}else if(iterNum==3){console.log("周报内容生成SUCCESS")}else if(iterNum==4){console.log("月报内容生成SUCCESS");}
           return texts;
       }
       console.log("没有内置这个专业")
       return "";
     } catch (error) {
-      console.log("报告内容生成异常")
+      if(iterNum==2){console.log("日报内容生成异常")}else if(iterNum==3){console.log("周报内容生成异常")}else if(iterNum==4){console.log("月报内容生成异常");}
       contentTxts (config,iterNum)
     }
   }
