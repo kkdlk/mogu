@@ -15,6 +15,7 @@ async function daily (axios, planId,config) {
   // 当前时刻在 6点-8点之间签到
   if (thisTime.getHours() <= 8 && thisTime.getHours() >=6) { 
     let contentTxt = contextTexts(config,2); // 获取内容 日报2遍长度就够了
+   
     let dayTitle = titleWeekend(); //日报标题
 
     let dataForm = {
