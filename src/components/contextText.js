@@ -31,6 +31,7 @@ function contentTxts (config,iterNum){
             texts += result[resultRandomLength].txt;
             texts += ";";
           }
+          console.log("报告内容生成成功")
           return texts;
       }else if(college=="电子信息"){
           var result  = dianzixinxi.data
@@ -41,12 +42,13 @@ function contentTxts (config,iterNum){
             texts += result[resultRandomLength].txt;
             texts += ";";
           }
+          console.log("报告内容生成成功")
           return texts;
       }
       console.log("没有内置这个专业")
       return "";
     } catch (error) {
-      console.log("日报内容生成异常")
+      console.log("报告内容生成异常")
       contentTxts (config,iterNum)
     }
   }

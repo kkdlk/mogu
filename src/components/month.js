@@ -30,7 +30,7 @@ async function months (axios, planId,config) {
     let thisTime = new Date();
     let monthTitle = (thisTime.getFullYear())+"年"+(thisTime.getMonth()+1)+"月"+",月报。" //拼接月报标题 格式：2020年11月,月报。
     let contentTxt = contextTexts(config,4) //月报内容
-    let monthNum = mGetDate(); //当月最大天数
+   // let monthNum = mGetDate(); //当月最大天数
     if (thisTime.getDate()==1&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { // 月末的6点-8点之间
             let dataForm = {
                 attachmentList: [],
