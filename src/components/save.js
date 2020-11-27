@@ -79,9 +79,7 @@ async function save (axios, planId) {
         msg = type === "START" ? "上班" : "下班";
       }
       return msg;
-  }else {
-    return "OUTTIME"
   }
-
+  return false
 }
 module.exports = save;

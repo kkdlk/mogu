@@ -64,16 +64,23 @@ axios.defaults.baseURL = "https://api.moguding.net:9000";
     /**
      * 当每日签到成功后进行日报汇报
      */
-    if (result != "OUTTIME") {
+    if (result) { // 每日签到成功
       // ~~~~~~~~~~~~~~~~~日报汇报  返回 daySuccess  dayError
       const dayResult = await daily(axios, planId, config);
       if (dayResult) {
         if (dayResult != "OUTTIME") {
           reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 蘑菇丁【${config.phone}的${result}签到、日报】成功啦！ 🎉`;
-          reMindMsg.desp = `每日打卡信息：${config.phone}的${result}—日报信息：${dayResult}`;
+          reMindMsg.desp = `每日打卡信息：${config.phone}的${result}成功—日报信息：${dayResult}`;
           //       msg ______    发送消息
           await remind(axios, config, reMindMsg);
-        } else { console.log("日报超时") }
+        } else { 
+          // 下班签到成功 日报超时 发送，下班签到成功消息
+          console.log("日报超时，每日签到成功") 
+          reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 蘑菇丁【${config.phone}的${result}签到、日报】成功啦！ 🎉`;
+          reMindMsg.desp = `每日打卡信息：${config.phone}的${result}成功`;
+          //       msg ______    发送消息
+          await remind(axios, config, reMindMsg);
+        }
       } else {
         reMindMsg.text = `🎉 ${data.getFullYear()}年${data.getMonth() + 1}月${data.getDate()}日 蘑菇丁【${dayResult} ❗️ ❗️ ❗，${result}签到】成功！ 🎉`;
         reMindMsg.desp = `每日打卡信息：${result}—日报信息：${dayResult}`;
