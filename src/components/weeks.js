@@ -20,7 +20,17 @@ async function weeks (axios, planId,config) {
     let thisTime = new Date();
     
     // 周日早上6点-8点之间签到
-    if (getWeekDate()=="星期一"&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { 
+    if (getWeekDate()=="星期一"&&(thisTime.getHours()<=10&&thisTime.getHours()>=6)) { 
+        let s = TodayInfo(config.startTimeDate).week
+        if(s){
+            console.log(s)
+            return false
+        }else{
+            console.log(s)
+            return false
+        }
+
+
         let contentTxt = contextTexts(config,3); //周报内容
             let dataForm = {
                 attachmentList: [],
@@ -45,7 +55,7 @@ async function weeks (axios, planId,config) {
                     }
               } catch (error) {
                   console.log("周报填写失败"+error)
-                 weeks (axios, planId,config)
+                weeks (axios, planId,config)
               }
            
     }else{

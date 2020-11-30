@@ -38,7 +38,7 @@ let config = {
   // 学院  护理 电子信息 
   LEABLETI: args[4],
   // 周报开始时间 2020/11/23  2020/07/20
-  STARTTIMEDATE: args[5]
+  STARTTIMEDATE: (args[5]).toString()
 };
 let reMindMsg = {
   // 消息标题
