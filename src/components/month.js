@@ -40,15 +40,21 @@ async function months (axios, planId,config) {
                 reportType: "month",
                 title: monthTitle //月报标题  上班或休假 每周有2天休假的时间
               }
-            // 发送月报签到请求
-            let { data: res } = await axios.request({
-                method: "post",
-                url: "/practice/paper/v1/save",
-                data: dataForm,
-            });
-            if (res.code == 200) {
-                return "月报填写成功";
-            }
+              try {
+                    // 发送月报签到请求
+                    let { data: res } = await axios.request({
+                        method: "post",
+                        url: "/practice/paper/v1/save",
+                        data: dataForm,
+                    });
+                    if (res.code == 200) {
+                        return "月报填写成功";
+                    }
+              } catch (error) {
+                  console.log("月报填写失败"+error)
+                  months (axios, planId,config)
+              }
+          
     }else{
         console.log("当前时间不是月初，不写月报哦")
         return "ErrorTimeOut"

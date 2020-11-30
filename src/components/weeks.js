@@ -33,16 +33,21 @@ async function weeks (axios, planId,config) {
                 startTime: getFirstDayOfWeek(new Date(),1), // 当前周 开始时间
                 endTime: getFirstDayOfWeek(new Date(),7) // 当前周 结束时间
               }
-        
-            // 发送周报签到请求
-            let { data: res } = await axios.request({
-                method: "post",
-                url: "/practice/paper/v1/save",
-                data: dataForm
-            });
-            if (res.code == 200) {
-                return "周报填写成功";
-            }
+              try {
+                   // 发送周报签到请求
+                    let { data: res } = await axios.request({
+                        method: "post",
+                        url: "/practice/paper/v1/save",
+                        data: dataForm
+                    });
+                    if (res.code == 200) {
+                        return "周报填写成功";
+                    }
+              } catch (error) {
+                  console.log("周报填写失败"+error)
+                 weeks (axios, planId,config)
+              }
+           
     }else{
         console.log("当前时间不是周一，不写周报哦")
         return "OUTTIME"
@@ -88,7 +93,7 @@ function getFirstDayOfWeek (date,n) {
  * console.log("今天是自2020/07/20日，开学以来的第 " + td.week + " 周，今天星期" + td.day);
  */
 function TodayInfo(start) {
-    var WEEKLEN = 7, // 一周7天为常量
+        var WEEKLEN = 7, // 一周7天为常量
         WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"],
         weekInfo = {"week": null, "day": null}, // 初始化返回信息，默认第null周，星期null
         oneDay = 24 * 60 * 60 * 1000, // 一天的毫秒时长

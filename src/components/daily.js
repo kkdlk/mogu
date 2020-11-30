@@ -26,20 +26,25 @@ async function daily (axios, planId,config) {
       reportType: "day",
       title: dayTitle //日报标题  上班或休假 每周有2天休假的时间
     }
-    
-    // 发送日报签到请求
-    let { data: res } = await axios.request({
-      method: "post",
-      url: "/practice/paper/v1/save",
-      data: dataForm,
-    });
-    if (res.code == 200) {
-       console.info("--------SUCCESS---------日报成功")
-      return "日报签到成功";
-    } else{
-        // 异常
-       return false;
+    try {
+      // 发送日报签到请求
+      let { data: res } = await axios.request({
+        method: "post",
+        url: "/practice/paper/v1/save",
+        data: dataForm,
+      });
+      if (res.code == 200) {
+        console.info("--------SUCCESS---------日报成功")
+        return "日报签到成功";
+      } else{
+          // 异常
+        return false;
+      }
+    } catch (error) {
+      console.log("-----------ERROR--------每日日报失败，再次尝试")
+      daily (axios, planId,config)
     }
+    
   } else {
     console.warn("--------Wraing---------超过早上八点 不写日报")
     // 超过早上八点 不写日报

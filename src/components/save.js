@@ -51,23 +51,10 @@ async function save (axios, planId) {
   };
   
   console.log("Type:", type);
-  if (thisTime.getHours()<=8&&thisTime.getHours()>=6){
-    console.log("上班打卡成功")
-      // 发送签到请求
-    let { data: res } = await axios.request({
-      method: "post",
-      url: "/attendence/clock/v1/save",
-      data: dataForm,
-    });
-    let msg = false;
-    if (res.code == 200) {
-      // 签到成功
-      msg = type === "START" ? "上班" : "下班";
-    }
-    return msg;
-  } else if(thisTime.getHours()<=18&&thisTime.getHours()>=17){
-    console.log("下班打卡成功")
-      // 发送签到请求
+  try {
+    if (thisTime.getHours()<=8&&thisTime.getHours()>=6){
+      console.log("上班打卡成功")
+        // 发送签到请求
       let { data: res } = await axios.request({
         method: "post",
         url: "/attendence/clock/v1/save",
@@ -79,7 +66,26 @@ async function save (axios, planId) {
         msg = type === "START" ? "上班" : "下班";
       }
       return msg;
+    } else if(thisTime.getHours()<=18&&thisTime.getHours()>=17){
+      console.log("下班打卡成功")
+        // 发送签到请求
+        let { data: res } = await axios.request({
+          method: "post",
+          url: "/attendence/clock/v1/save",
+          data: dataForm,
+        });
+        let msg = false;
+        if (res.code == 200) {
+          // 签到成功
+          msg = type === "START" ? "上班" : "下班";
+        }
+        return msg;
+    }
+  } catch (error) {
+    console.log("上下班每日签到打卡失败，重新尝试"+error)
+    save (axios, planId)
   }
+ 
   return false
 }
 module.exports = save;
