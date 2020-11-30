@@ -18,14 +18,8 @@ let contextTexts = require("../components/contextText")
  */
 async function weeks (axios, planId,config) {
     let thisTime = new Date();
-    
     // 周日早上6点-8点之间签到
-    if (getWeekDate()=="星期一"&&(thisTime.getHours()<=10&&thisTime.getHours()>=6)) { 
-        let s = TodayInfo(config.startTimeDate).week
-        console.log("当前周"+s)
-        return false;
-
-
+    if (getWeekDate()=="星期一"&&(thisTime.getHours()<=12&&thisTime.getHours()>=7)) { 
         let contentTxt = contextTexts(config,3); //周报内容
             let dataForm = {
                 attachmentList: [],
@@ -33,8 +27,8 @@ async function weeks (axios, planId,config) {
                 content: contentTxt, //周报内容
                 planId: planId,
                 reportType: "week",
-                title: "第"+(TodayInfo(config.startTimeDate).week)+"周，周报", //周报标题  
-                weeks: "第"+(TodayInfo(config.startTimeDate).week)+"周", // 第x周 从startTimeDate开始
+                title: "第"+(TodayInfo(config.STARTTIMEDATE).week)+"周，周报", //周报标题  
+                weeks: "第"+(TodayInfo(config.STARTTIMEDATE).week)+"周", // 第x周 从startTimeDate开始
                 startTime: getFirstDayOfWeek(new Date(),1), // 当前周 开始时间
                 endTime: getFirstDayOfWeek(new Date(),7) // 当前周 结束时间
               }
