@@ -19,7 +19,7 @@ let contextTexts = require("../components/contextText")
 async function weeks (axios, planId,config) {
     let thisTime = new Date();
     // 周日早上6点-8点之间签到
-    if (getWeekDate()=="星期一"&&(thisTime.getHours()<=12&&thisTime.getHours()>=7)) { 
+    if (getWeekDate()=="星期一"&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { 
         let contentTxt = contextTexts(config,3); //周报内容
             let dataForm = {
                 attachmentList: [],
