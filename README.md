@@ -16,7 +16,7 @@ PHONE :手机号
 PASSWORD：密码  
 SCKEY：Server酱的key:http://sc.ftqq.com/3.version
 TOKEN: 蘑菇丁token
-LEABLETI：专业，电子信息，护理
+LEABLETI：专业，电子信息，护理，学前教育，初等教育
 STARTTIMEDATE：开始签到的第一天的时间日期，格式：2020/11/23   2020/07/20
 Sava.js中添加了两个地址，咸职和第四人民医院的地址
 在线经纬度获取：http://www.daquan.la/jingwei/
