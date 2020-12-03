@@ -26,12 +26,16 @@ function mGetDate(){
  * @param {配置} config 
  */
 async function months (axios, planId,config) {
-
     let thisTime = new Date();
     let monthTitle = (thisTime.getFullYear())+"年"+(thisTime.getMonth()+1)+"月"+",月报。" //拼接月报标题 格式：2020年11月,月报。
    // let monthNum = mGetDate(); //当月最大天数
-    if (thisTime.getDate()==1&&(thisTime.getHours()<=8&&thisTime.getHours()>=6)) { // 月末的6点-8点之间
-        let contentTxt = contextTexts(config,4) //月报内容
+   console.log("天"+thisTime.getDate()+"时:"+thisTime.getHours());
+    if (thisTime.getDate()==1&&(thisTime.getHours()==8)) { // 月末的6点-8点之间
+        let contentTxt = contextTexts(config,7) //月报内容
+        if(!monthTitle){
+            monthTitle = (thisTime.getFullYear())+"年"+(thisTime.getMonth()+1)+"月"+",月报。"
+        }
+        sleep(5000)
             let dataForm = {
                 attachmentList: [],
                 attachments: "",
@@ -40,28 +44,38 @@ async function months (axios, planId,config) {
                 reportType: "month",
                 title: monthTitle //月报标题  上班或休假 每周有2天休假的时间
               }
+            
               try {
-                    // 发送月报签到请求
-                    let { data: res } = await axios.request({
-                        method: "post",
-                        url: "/practice/paper/v1/save",
-                        data: dataForm,
-                    });
-                    if (res.code == 200) {
-                        return "月报填写成功";
-                    }
-              } catch (error) {
-                  console.log("月报填写失败"+error)
-                  months (axios, planId,config)
-              }
+                // 发送月报签到请求
+                let { data: res } = await axios.request({
+                    method: "post",
+                    url: "/practice/paper/v1/save",
+                    data: dataForm,
+                });
+                if (res.code == 200) {
+                    return "月报填写成功";
+                }else{
+                    console.log(`月报异常！异常信息为:${res.toString()}`)
+                    await months (axios, planId,loginInfo)
+                }
+          } catch (error) {
+              console.log("月报填写失败"+error)
+              await months (axios, planId,loginInfo)
+          }
           
     }else{
-        console.log("当前时间不是月初，不写月报哦")
+        console.log("当前时间不是月初也不在用户设置的月报填写时间内，不写月报哦")
         return "ErrorTimeOut"
     }
     return false;
 }
 
+//自己写的一个延迟函数 
+function sleep(milliSeconds){ 
+    var StartTime =new Date().getTime(); 
+    let i = 0;
+    while (new Date().getTime() <StartTime+milliSeconds);
 
+}
 
 module.exports = months;
