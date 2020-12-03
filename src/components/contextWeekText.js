@@ -18,12 +18,12 @@ function contextWeekText(weekNum) {
         let randomWeekJson = Math.round(Math.random() * 1) //随机week1还是week2
 
         if (randomWeekJson == 0) {
-            let result = zhoubao1.data
-            texts = result[weekNum].txt;
+            let result1 = zhoubao1.data
+            texts = result1[weekNum].txt;
 
         } else if (randomWeekJson == 1) {
-            let result = zhoubao2.data
-            texts = result[weekNum].txt;
+            let result2 = zhoubao2.data
+            texts = result2[weekNum].txt;
         }
         return texts;
     } catch (error) {
